@@ -13,6 +13,11 @@
   <body>
     <header>
       <div class="container">
+        <button class="hamburger" id="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <div class="logo">
           <img
             src="images/logo/logo-smk-bhakti-pacet.png"
@@ -45,6 +50,33 @@
         </nav>
       </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+      <nav class="mobile-menu" id="mobile-menu">
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="tentang.html">Tentang</a></li>
+          <li><a href="berita.html">Kegiatan</a></li>
+          <li>
+            <a href="#" class="dropdown-toggle" id="mobile-kurikulum-toggle"
+              >Kurikulum ▼</a
+            >
+            <ul class="dropdown-menu" id="mobile-kurikulum-menu">
+              <li><a href="kelas.html">Intrakurikuler</a></li>
+              <li><a href="ekstrakurikuler.html">Ekstrakurikuler</a></li>
+              <li><a href="kokurikuler.html">Kokurikuler</a></li>
+              <li><a href="kalender.html">Kalender Akademik</a></li>
+            </ul>
+          </li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="galeri.html">Galeri</a></li>
+          <li><a href="pendaftaran.html">Pendaftaran</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <main>
       <div class="container">
@@ -117,62 +149,69 @@
     <script src="script.js"></script>
     <script>
       // Load galeri dynamically
-      async function loadGaleri(kategori = 'all') {
+      async function loadGaleri(kategori = "all") {
         try {
-          let url = 'api/galeri.php?';
-          if (kategori !== 'all') url += `kategori=${kategori}`;
+          let url = "api/galeri.php?";
+          if (kategori !== "all") url += `kategori=${kategori}`;
 
           const response = await fetch(url);
           const galeri = await response.json();
 
-          const galleryGrid = document.getElementById('gallery-grid');
-          galleryGrid.innerHTML = '';
+          const galleryGrid = document.getElementById("gallery-grid");
+          galleryGrid.innerHTML = "";
 
           if (galeri.length === 0) {
-            galleryGrid.innerHTML = '<div class="empty-state"><h3>Tidak ada foto</h3><p>Belum ada foto yang ditambahkan.</p></div>';
+            galleryGrid.innerHTML =
+              '<div class="empty-state"><h3>Tidak ada foto</h3><p>Belum ada foto yang ditambahkan.</p></div>';
             return;
           }
 
-          galeri.forEach(item => {
-            const galleryItem = document.createElement('div');
-            galleryItem.className = 'gallery-item';
-            galleryItem.setAttribute('data-category', item.kategori);
+          galeri.forEach((item) => {
+            const galleryItem = document.createElement("div");
+            galleryItem.className = "gallery-item";
+            galleryItem.setAttribute("data-category", item.kategori);
 
-            const imageUrl = item.gambar || 'images/placeholder.jpg';
+            const imageUrl = item.gambar || "images/placeholder.jpg";
 
             galleryItem.innerHTML = `
-              <img src="${imageUrl}" alt="${item.judul || 'Foto Galeri'}" loading="lazy" onerror="this.src='images/placeholder.jpg'">
+              <img src="${imageUrl}" alt="${
+              item.judul || "Foto Galeri"
+            }" loading="lazy" onerror="this.src='images/placeholder.jpg'">
               <div class="gallery-overlay">
-                <h3>${item.judul || 'Tanpa Judul'}</h3>
-                <p>${item.deskripsi || 'Deskripsi foto'}</p>
-                <span class="gallery-date">${item.tanggal_formatted || 'Tanpa Tanggal'}</span>
+                <h3>${item.judul || "Tanpa Judul"}</h3>
+                <p>${item.deskripsi || "Deskripsi foto"}</p>
+                <span class="gallery-date">${
+                  item.tanggal_formatted || "Tanpa Tanggal"
+                }</span>
               </div>
             `;
 
             // Add click event for lightbox
-            galleryItem.addEventListener('click', () => openLightbox(item));
+            galleryItem.addEventListener("click", () => openLightbox(item));
 
             galleryGrid.appendChild(galleryItem);
           });
-
         } catch (error) {
-          console.error('Error loading galeri:', error);
-          document.getElementById('gallery-grid').innerHTML = '<p>Error memuat galeri</p>';
+          console.error("Error loading galeri:", error);
+          document.getElementById("gallery-grid").innerHTML =
+            "<p>Error memuat galeri</p>";
         }
       }
 
       // Gallery filter functionality
       function initGalleryFilters() {
-        const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
+        const filterBtns = document.querySelectorAll(
+          ".gallery-filters .filter-btn"
+        );
 
-        filterBtns.forEach(btn => {
-          btn.addEventListener('click', function() {
+        filterBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
             // Remove active class from all buttons
-            filterBtns.forEach(b => b.classList.remove('active'));
+            filterBtns.forEach((b) => b.classList.remove("active"));
             // Add active class to clicked button
-            this.classList.add('active');
+            this.classList.add("active");
 
-            const kategori = this.getAttribute('data-category');
+            const kategori = this.getAttribute("data-category");
             loadGaleri(kategori);
           });
         });
@@ -180,33 +219,35 @@
 
       // Lightbox functionality
       function openLightbox(item) {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImage = document.getElementById('lightbox-image');
-        const lightboxTitle = document.getElementById('lightbox-title');
-        const lightboxDescription = document.getElementById('lightbox-description');
-        const lightboxDate = document.getElementById('lightbox-date');
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImage = document.getElementById("lightbox-image");
+        const lightboxTitle = document.getElementById("lightbox-title");
+        const lightboxDescription = document.getElementById(
+          "lightbox-description"
+        );
+        const lightboxDate = document.getElementById("lightbox-date");
 
-        lightboxImage.src = item.gambar || 'images/placeholder.jpg';
-        lightboxImage.alt = item.judul || 'Foto Galeri';
-        lightboxTitle.textContent = item.judul || 'Tanpa Judul';
-        lightboxDescription.textContent = item.deskripsi || 'Deskripsi foto';
-        lightboxDate.textContent = item.tanggal_formatted || 'Tanpa Tanggal';
+        lightboxImage.src = item.gambar || "images/placeholder.jpg";
+        lightboxImage.alt = item.judul || "Foto Galeri";
+        lightboxTitle.textContent = item.judul || "Tanpa Judul";
+        lightboxDescription.textContent = item.deskripsi || "Deskripsi foto";
+        lightboxDate.textContent = item.tanggal_formatted || "Tanpa Tanggal";
 
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        lightbox.style.display = "flex";
+        document.body.style.overflow = "hidden";
       }
 
       // Close lightbox
-      document.addEventListener('DOMContentLoaded', function() {
-        const lightboxClose = document.querySelector('.lightbox-close');
-        const lightbox = document.getElementById('lightbox');
+      document.addEventListener("DOMContentLoaded", function () {
+        const lightboxClose = document.querySelector(".lightbox-close");
+        const lightbox = document.getElementById("lightbox");
 
         if (lightboxClose) {
-          lightboxClose.addEventListener('click', closeLightbox);
+          lightboxClose.addEventListener("click", closeLightbox);
         }
 
         if (lightbox) {
-          lightbox.addEventListener('click', function(e) {
+          lightbox.addEventListener("click", function (e) {
             if (e.target === lightbox) {
               closeLightbox();
             }
@@ -219,16 +260,16 @@
       });
 
       function closeLightbox() {
-        const lightbox = document.getElementById('lightbox');
+        const lightbox = document.getElementById("lightbox");
         if (lightbox) {
-          lightbox.style.display = 'none';
-          document.body.style.overflow = 'auto';
+          lightbox.style.display = "none";
+          document.body.style.overflow = "auto";
         }
       }
 
       // Close lightbox with ESC key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
           closeLightbox();
         }
       });
