@@ -13,6 +13,11 @@
   <body>
     <header>
       <div class="container">
+        <button class="hamburger" id="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <div class="logo">
           <img
             src="images/logo/logo-smk-bhakti-pacet.png"
@@ -51,6 +56,31 @@
         </nav>
       </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
+      <nav class="mobile-menu" id="mobile-menu">
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="tentang.html">Tentang</a></li>
+          <li><a href="berita.html">Kegiatan</a></li>
+          <li>
+            <a href="#" class="dropdown-toggle" id="mobile-kurikulum-toggle">Kurikulum ▼</a>
+            <ul class="dropdown-menu" id="mobile-kurikulum-menu">
+              <li><a href="kelas.html">Intrakurikuler</a></li>
+              <li><a href="smk-bhakti-pacet/ekstrakurikuler.html">Ekstrakurikuler</a></li>
+              <li><a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a></li>
+              <li><a href="kalender.html">Kalender Akademik</a></li>
+            </ul>
+          </li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="galeri.html">Galeri</a></li>
+          <li><a href="pendaftaran.html">Pendaftaran</a></li>
+          <li><a href="kontak.html">Kontak</a></li>
+          <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <main>
       <div class="container">
