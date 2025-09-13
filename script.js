@@ -1071,6 +1071,70 @@ function init3DPerformanceMonitoring() {
   requestAnimationFrame(monitorPerformance);
 }
 
+// ==========================================
+// MOBILE HAMBURGER MENU FUNCTIONALITY
+// ==========================================
+
+function initMobileMenu() {
+  const hamburger = document.getElementById('hamburger-menu');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileKurikulumToggle = document.getElementById('mobile-kurikulum-toggle');
+  const mobileKurikulumMenu = document.getElementById('mobile-kurikulum-menu');
+
+  if (!hamburger || !mobileMenuOverlay || !mobileMenu) return;
+
+  // Toggle mobile menu
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenuOverlay.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.classList.toggle('mobile-menu-open');
+  });
+
+  // Close mobile menu when clicking overlay
+  mobileMenuOverlay.addEventListener('click', (e) => {
+    if (e.target === mobileMenuOverlay) {
+      closeMobileMenu();
+    }
+  });
+
+  // Mobile dropdown toggle
+  if (mobileKurikulumToggle && mobileKurikulumMenu) {
+    mobileKurikulumToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mobileKurikulumMenu.classList.toggle('active');
+    });
+  }
+
+  // Close mobile menu when clicking menu links
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a:not(.dropdown-toggle)');
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileMenu();
+    });
+  });
+
+  // Close mobile menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+      closeMobileMenu();
+    }
+  });
+
+  function closeMobileMenu() {
+    hamburger.classList.remove('active');
+    mobileMenuOverlay.classList.remove('active');
+    mobileMenu.classList.remove('active');
+    document.body.classList.remove('mobile-menu-open');
+
+    // Close mobile dropdown if open
+    if (mobileKurikulumMenu) {
+      mobileKurikulumMenu.classList.remove('active');
+    }
+  }
+}
+
 // Initialize all 3D functionality when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   initTabs();
@@ -1084,6 +1148,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeaderScroll(); // Add header scroll effect
   initBackToTop(); // Add back to top functionality
   updateLoginButton(); // Update login button on all pages
+  initMobileMenu(); // Add mobile hamburger menu
 
   // Initialize 3D Effects
   init3DMouseTracking();
