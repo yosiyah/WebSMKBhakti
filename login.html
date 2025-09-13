@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html">Intrakurikuler</a></li>
+                <li>
+                  <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                    >Ekstrakurikuler</a
+                  >
+                </li>
+                <li>
+                  <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                </li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="pendaftaran.html">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="active">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="login-section">
+          <h2>Login ke Sistem</h2>
+          <p>Masuk untuk mengakses fitur tambahan website SMK BHAKTI PACET</p>
+
+          <div class="login-container">
+            <div class="login-form-container">
+              <h3>Login</h3>
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    placeholder="Masukkan username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Masukkan password"
+                    required
+                  />
+                </div>
+                <div class="form-options">
+                  <label>
+                    <input type="checkbox" id="remember" /> Ingat saya
+                  </label>
+                  <a href="#" class="forgot-password">Lupa password?</a>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+              </form>
+            </div>
+
+            <div class="login-info">
+              <h3>Informasi Login</h3>
+              <div class="info-box">
+                <h4>Demo Account:</h4>
+                <p><strong>Admin:</strong> admin / admin123</p>
+                <p><strong>Guru:</strong> guru / guru123</p>
+                <p><strong>Siswa:</strong> siswa / siswa123</p>
+                <p><strong>Orang Tua:</strong> ortu / ortu123</p>
+              </div>
+              <div class="features-list">
+                <h4>Fitur yang bisa diakses setelah login:</h4>
+                <ul>
+                  <li>✅ Forum diskusi interaktif</li>
+                  <li>✅ Download materi pembelajaran</li>
+                  <li>✅ Upload tugas</li>
+                  <li>✅ Notifikasi acara</li>
+                  <li>✅ Profil pengguna</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2024 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Login form handling
+      document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('loginForm');
+
+        if (loginForm) {
+          loginForm.addEventListener('submit', handleLogin);
+        }
+
+        // Check if user is already logged in
+        checkLoginStatus();
+      });
+
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const remember = document.getElementById('remember').checked;
+
+        // Show loading state
+        const submitBtn = event.target.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sedang login...';
+        submitBtn.disabled = true;
+
+        try {
+          const response = await fetch('api/auth.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              action: 'login',
+              username: username,
+              password: password,
+              remember: remember
+            })
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            // Show success message
+            showMessage('Login berhasil! Mengalihkan...', 'success');
+
+            // Redirect based on user role
+            setTimeout(() => {
+              if (result.user.role === 'admin') {
+                window.location.href = 'admin/';
+              } else {
+                window.location.href = 'index.html';
+              }
+            }, 1500);
+          } else {
+            showMessage(result.error || 'Login gagal', 'error');
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+          showMessage('Terjadi kesalahan saat login', 'error');
+        } finally {
+          // Reset button state
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      }
+
+      async function checkLoginStatus() {
+        try {
+          const response = await fetch('api/auth.php?action=check');
+          const result = await response.json();
+
+          if (result.authenticated) {
+            // User is already logged in, redirect
+            if (result.user.role === 'admin') {
+              window.location.href = 'admin/';
+            } else {
+              window.location.href = 'index.html';
+            }
+          }
+        } catch (error) {
+          console.error('Check login status error:', error);
+        }
+      }
+
+      function showMessage(message, type) {
+        // Remove existing message
+        const existingMessage = document.querySelector('.message');
+        if (existingMessage) {
+          existingMessage.remove();
+        }
+
+        // Create message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = message;
+
+        // Add to form
+        const form = document.getElementById('loginForm');
+        form.insertBefore(messageDiv, form.firstChild);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+          if (messageDiv.parentNode) {
+            messageDiv.remove();
+          }
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

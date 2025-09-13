@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="admin-container">
+      <header class="admin-header">
+        <div class="admin-logo">
+          <img
+            src="../images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="40"
+            height="40"
+          />
+          <h1>Admin Panel</h1>
+        </div>
+        <div class="admin-user">
+          <span id="user-info">Loading...</span>
+          <button id="logout-btn" class="btn-secondary">Logout</button>
+        </div>
+      </header>
+
+      <nav class="admin-nav">
+        <ul>
+          <li>
+            <a
+              href="#dashboard"
+              class="nav-link active"
+              data-section="dashboard"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="#kegiatan" class="nav-link" data-section="kegiatan"
+              >Kelola Kegiatan</a
+            >
+          </li>
+          <li>
+            <a href="#galeri" class="nav-link" data-section="galeri"
+              >Kelola Galeri</a
+            >
+          </li>
+          <li>
+            <a href="#settings" class="nav-link" data-section="settings"
+              >Pengaturan</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="admin-section active">
+          <h2>Dashboard</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3 id="total-kegiatan">0</h3>
+              <p>Total Kegiatan</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="total-galeri">0</h3>
+              <p>Total Galeri</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="published-kegiatan">0</h3>
+              <p>Kegiatan Published</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="draft-kegiatan">0</h3>
+              <p>Kegiatan Draft</p>
+            </div>
+          </div>
+
+          <div class="recent-activity">
+            <h3>Aktivitas Terbaru</h3>
+            <div id="recent-activity-list">
+              <p>Loading...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Kegiatan Management Section -->
+        <section id="kegiatan-section" class="admin-section">
+          <div class="section-header">
+            <h2>Kelola Kegiatan</h2>
+            <button id="add-kegiatan-btn" class="btn-primary">
+              Tambah Kegiatan
+            </button>
+          </div>
+
+          <div class="filters">
+            <select id="kegiatan-filter">
+              <option value="all">Semua Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </select>
+            <select id="kegiatan-kategori-filter">
+              <option value="all">Semua Kategori</option>
+              <option value="akademik">Akademik</option>
+              <option value="siswa">Siswa</option>
+              <option value="administratif">Administratif</option>
+              <option value="umum">Umum</option>
+            </select>
+          </div>
+
+          <div id="kegiatan-list" class="content-list">
+            <p>Loading...</p>
+          </div>
+        </section>
+
+        <!-- Galeri Management Section -->
+        <section id="galeri-section" class="admin-section">
+          <div class="section-header">
+            <h2>Kelola Galeri</h2>
+            <button id="add-galeri-btn" class="btn-primary">Tambah Foto</button>
+          </div>
+
+          <div class="filters">
+            <select id="galeri-kategori-filter">
+              <option value="all">Semua Kategori</option>
+              <option value="kegiatan">Kegiatan</option>
+              <option value="fasilitas">Fasilitas</option>
+              <option value="siswa">Siswa</option>
+              <option value="guru">Guru</option>
+              <option value="umum">Umum</option>
+            </select>
+          </div>
+
+          <div id="galeri-list" class="content-list">
+            <p>Loading...</p>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="admin-section">
+          <h2>Pengaturan</h2>
+          <div class="settings-form">
+            <div class="form-group">
+              <label for="site-title">Judul Situs</label>
+              <input type="text" id="site-title" value="SMK BHAKTI PACET" />
+            </div>
+            <div class="form-group">
+              <label for="site-description">Deskripsi Situs</label>
+              <textarea id="site-description" rows="3">
+Website resmi SMK BHAKTI PACET</textarea
+              >
+            </div>
+            <button class="btn-primary">Simpan Pengaturan</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Kegiatan Modal -->
+    <div id="kegiatan-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="kegiatan-modal-title">Tambah Kegiatan</h3>
+          <span class="modal-close">&times;</span>
+        </div>
+        <form id="kegiatan-form">
+          <div class="form-group">
+            <label for="kegiatan-judul">Judul *</label>
+            <input type="text" id="kegiatan-judul" required />
+          </div>
+          <div class="form-group">
+            <label for="kegiatan-isi">Isi *</label>
+            <textarea id="kegiatan-isi" rows="10" required></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="kegiatan-tanggal">Tanggal *</label>
+              <input type="date" id="kegiatan-tanggal" required />
+            </div>
+            <div class="form-group">
+              <label for="kegiatan-kategori">Kategori *</label>
+              <select id="kegiatan-kategori" required>
+                <option value="akademik">Akademik</option>
+                <option value="siswa">Siswa</option>
+                <option value="administratif">Administratif</option>
+                <option value="umum">Umum</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="kegiatan-gambar">URL Gambar</label>
+            <input
+              type="url"
+              id="kegiatan-gambar"
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          <div class="form-group">
+            <label for="kegiatan-status">Status</label>
+            <select id="kegiatan-status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal()">
+              Batal
+            </button>
+            <button type="submit" class="btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Galeri Modal -->
+    <div id="galeri-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="galeri-modal-title">Tambah Foto</h3>
+          <span class="modal-close">&times;</span>
+        </div>
+        <form id="galeri-form">
+          <div class="form-group">
+            <label for="galeri-judul">Judul</label>
+            <input type="text" id="galeri-judul" />
+          </div>
+          <div class="form-group">
+            <label for="galeri-deskripsi">Deskripsi</label>
+            <textarea id="galeri-deskripsi" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="galeri-tanggal">Tanggal</label>
+              <input type="date" id="galeri-tanggal" />
+            </div>
+            <div class="form-group">
+              <label for="galeri-kategori">Kategori</label>
+              <select id="galeri-kategori">
+                <option value="kegiatan">Kegiatan</option>
+                <option value="fasilitas">Fasilitas</option>
+                <option value="siswa">Siswa</option>
+                <option value="guru">Guru</option>
+                <option value="umum">Umum</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="galeri-gambar">URL Gambar *</label>
+            <input
+              type="url"
+              id="galeri-gambar"
+              required
+              placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" onclick="closeModal()">
+              Batal
+            </button>
+            <button type="submit" class="btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

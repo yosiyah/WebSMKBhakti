@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kurikulum - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html" class="active">Intrakurikuler</a></li>
+                <li>
+                  <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                    >Ekstrakurikuler</a
+                  >
+                </li>
+                <li>
+                  <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                </li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="pendaftaran.html">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="classes-section">
+          <h2>Kurikulum</h2>
+          <p>
+            Akses informasi tentang kurikulum, jadwal, dan sumber daya untuk
+            setiap kelas dan mata pelajaran.
+          </p>
+
+          <div class="grade-tabs">
+            <button class="tab-btn active" data-grade="10">Kelas 10</button>
+            <button class="tab-btn" data-grade="11">Kelas 11</button>
+            <button class="tab-btn" data-grade="12">Kelas 12</button>
+          </div>
+
+          <div class="grade-content" id="grade-10">
+            <h3>Kelas 10 - Tahun Pertama</h3>
+            <div class="subjects-grid">
+              <div class="subject-card">
+                <h4>Matematika</h4>
+                <p>
+                  Pelajari konsep dasar matematika untuk kehidupan sehari-hari
+                  dan aplikasi teknis.
+                </p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Bahasa Indonesia</h4>
+                <p>Pengembangan keterampilan berbahasa dan literasi.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Bahasa Inggris</h4>
+                <p>Komunikasi dalam bahasa internasional untuk dunia kerja.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Teknik Informatika</h4>
+                <p>Dasar-dasar pemrograman dan teknologi informasi.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="grade-content" id="grade-11" style="display: none">
+            <h3>Kelas 11 - Tahun Kedua</h3>
+            <div class="subjects-grid">
+              <div class="subject-card">
+                <h4>Matematika Lanjutan</h4>
+                <p>Konsep matematika tingkat lanjut untuk aplikasi teknis.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Fisika</h4>
+                <p>Prinsip-prinsip fisika dan aplikasinya dalam teknologi.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Kimia</h4>
+                <p>Dasar-dasar kimia untuk industri dan laboratorium.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Pemrograman Web</h4>
+                <p>Pengembangan aplikasi web dan desain antarmuka.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="grade-content" id="grade-12" style="display: none">
+            <h3>Kelas 12 - Tahun Ketiga</h3>
+            <div class="subjects-grid">
+              <div class="subject-card">
+                <h4>Proyek Akhir</h4>
+                <p>Pengembangan proyek akhir sebagai persiapan kerja.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Praktik Kerja Lapangan</h4>
+                <p>Pengalaman kerja di industri mitra.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Etika Profesi</h4>
+                <p>Persiapan mental dan etika untuk dunia kerja.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+              <div class="subject-card">
+                <h4>Teknologi Canggih</h4>
+                <p>Trend terbaru dalam teknologi dan inovasi.</p>
+                <a href="#" class="subject-link">Lihat Silabus</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2023 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

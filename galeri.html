@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galeri Foto - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html">Intrakurikuler</a></li>
+                <li><a href="ekstrakurikuler.html">Ekstrakurikuler</a></li>
+                <li><a href="kokurikuler.html">Kokurikuler</a></li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="galeri.html" class="active">Galeri</a></li>
+            <li><a href="pendaftaran.html">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="gallery-section">
+          <h2>Galeri Foto</h2>
+          <p>
+            Koleksi foto kegiatan, fasilitas, dan momen-momen penting di SMK
+            BHAKTI PACET.
+          </p>
+
+          <div class="gallery-filters">
+            <button class="filter-btn active" data-category="all">Semua</button>
+            <button class="filter-btn" data-category="kegiatan">
+              Kegiatan
+            </button>
+            <button class="filter-btn" data-category="fasilitas">
+              Fasilitas
+            </button>
+            <button class="filter-btn" data-category="siswa">Siswa</button>
+            <button class="filter-btn" data-category="guru">Guru</button>
+          </div>
+
+          <div class="gallery-grid" id="gallery-grid">
+            <!-- Gallery items will be loaded dynamically -->
+            <div class="loading-state">
+              <p>Memuat galeri...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+      <div class="lightbox-content">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="" />
+        <div class="lightbox-info">
+          <h3 id="lightbox-title"></h3>
+          <p id="lightbox-description"></p>
+          <span id="lightbox-date" class="gallery-date"></span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2024 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" title="Kembali ke Atas">
+      ↑
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+      // Load galeri dynamically
+      async function loadGaleri(kategori = 'all') {
+        try {
+          let url = 'api/galeri.php?';
+          if (kategori !== 'all') url += `kategori=${kategori}`;
+
+          const response = await fetch(url);
+          const galeri = await response.json();
+
+          const galleryGrid = document.getElementById('gallery-grid');
+          galleryGrid.innerHTML = '';
+
+          if (galeri.length === 0) {
+            galleryGrid.innerHTML = '<div class="empty-state"><h3>Tidak ada foto</h3><p>Belum ada foto yang ditambahkan.</p></div>';
+            return;
+          }
+
+          galeri.forEach(item => {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            galleryItem.setAttribute('data-category', item.kategori);
+
+            const imageUrl = item.gambar || 'images/placeholder.jpg';
+
+            galleryItem.innerHTML = `
+              <img src="${imageUrl}" alt="${item.judul || 'Foto Galeri'}" loading="lazy" onerror="this.src='images/placeholder.jpg'">
+              <div class="gallery-overlay">
+                <h3>${item.judul || 'Tanpa Judul'}</h3>
+                <p>${item.deskripsi || 'Deskripsi foto'}</p>
+                <span class="gallery-date">${item.tanggal_formatted || 'Tanpa Tanggal'}</span>
+              </div>
+            `;
+
+            // Add click event for lightbox
+            galleryItem.addEventListener('click', () => openLightbox(item));
+
+            galleryGrid.appendChild(galleryItem);
+          });
+
+        } catch (error) {
+          console.error('Error loading galeri:', error);
+          document.getElementById('gallery-grid').innerHTML = '<p>Error memuat galeri</p>';
+        }
+      }
+
+      // Gallery filter functionality
+      function initGalleryFilters() {
+        const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
+
+        filterBtns.forEach(btn => {
+          btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            const kategori = this.getAttribute('data-category');
+            loadGaleri(kategori);
+          });
+        });
+      }
+
+      // Lightbox functionality
+      function openLightbox(item) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxDescription = document.getElementById('lightbox-description');
+        const lightboxDate = document.getElementById('lightbox-date');
+
+        lightboxImage.src = item.gambar || 'images/placeholder.jpg';
+        lightboxImage.alt = item.judul || 'Foto Galeri';
+        lightboxTitle.textContent = item.judul || 'Tanpa Judul';
+        lightboxDescription.textContent = item.deskripsi || 'Deskripsi foto';
+        lightboxDate.textContent = item.tanggal_formatted || 'Tanpa Tanggal';
+
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Close lightbox
+      document.addEventListener('DOMContentLoaded', function() {
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const lightbox = document.getElementById('lightbox');
+
+        if (lightboxClose) {
+          lightboxClose.addEventListener('click', closeLightbox);
+        }
+
+        if (lightbox) {
+          lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+              closeLightbox();
+            }
+          });
+        }
+
+        // Load gallery and initialize filters
+        loadGaleri();
+        initGalleryFilters();
+      });
+
+      function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      }
+
+      // Close lightbox with ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        }
+      });
+    </script>
+  </body>
+</html>

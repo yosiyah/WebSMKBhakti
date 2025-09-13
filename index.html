@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMK BHAKTI PACET - Website Sekolah</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <div class="nav-container">
+            <ul class="nav-menu">
+              <li><a href="index.html" class="active">Beranda</a></li>
+              <li><a href="tentang.html">Tentang</a></li>
+              <li><a href="berita.html">Kegiatan</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Kurikulum</a>
+                <ul class="dropdown-menu">
+                  <li><a href="kelas.html">Intrakurikuler</a></li>
+                  <li>
+                    <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                      >Ekstrakurikuler</a
+                    >
+                  </li>
+                  <li>
+                    <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                  </li>
+                  <li><a href="kalender.html">Kalender Akademik</a></li>
+                </ul>
+              </li>
+              <li><a href="forum.html">Forum</a></li>
+              <li><a href="galeri.html">Galeri</a></li>
+              <li><a href="pendaftaran.html">Pendaftaran</a></li>
+              <li><a href="kontak.html">Kontak</a></li>
+              <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+            </ul>
+            <div class="search-bar">
+              <input type="text" id="search-input" placeholder="Cari..." />
+              <button id="search-btn">🔍</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section
+      class="hero"
+      style="
+        background-image: linear-gradient(
+            rgba(0, 51, 102, 0.7),
+            rgba(0, 51, 102, 0.7)
+          ),
+          url('images/hero/school-building.jpg');
+        background-size: cover;
+        background-position: center;
+      "
+    >
+      <div class="container">
+        <h2>Selamat Datang di SMK BHAKTI PACET</h2>
+        <p>
+          Platform informasi dan komunikasi untuk siswa, orang tua, dan staf
+          pengajar.
+        </p>
+        <a href="#featured" class="cta-btn">Pelajari Lebih Lanjut</a>
+      </div>
+    </section>
+
+    <main>
+      <div class="container">
+        <section id="featured" class="grid">
+          <div class="card">
+            <h3>Berita Unggulan</h3>
+            <div id="featured-news">
+              <p>Memuat berita terbaru...</p>
+            </div>
+            <a href="berita.html">Lihat Semua Berita</a>
+          </div>
+          <div class="card">
+            <h3>Galeri Terbaru</h3>
+            <div id="featured-gallery">
+              <p>Memuat galeri...</p>
+            </div>
+            <a href="galeri.html">Lihat Semua Foto</a>
+          </div>
+          <div class="card">
+            <h3>Tautan Cepat</h3>
+            <ul>
+              <li><a href="kelas.html">Jadwal Kelas</a></li>
+              <li><a href="forum.html">Forum Diskusi</a></li>
+              <li><a href="kontak.html">Hubungi Kami</a></li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2023 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" title="Kembali ke Atas">
+      ↑
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+      // Load featured content dynamically
+      async function loadFeaturedContent() {
+        try {
+          // Load latest news
+          const newsResponse = await fetch('api/kegiatan.php?limit=3');
+          const news = await newsResponse.json();
+
+          const featuredNews = document.getElementById('featured-news');
+          if (news.length > 0) {
+            featuredNews.innerHTML = news.map(item => `
+              <div class="featured-item">
+                <h4>${item.judul}</h4>
+                <p class="date">${item.tanggal_formatted}</p>
+                <p>${item.excerpt}</p>
+              </div>
+            `).join('');
+          } else {
+            featuredNews.innerHTML = '<p>Belum ada berita terbaru.</p>';
+          }
+
+          // Load latest gallery items
+          const galleryResponse = await fetch('api/galeri.php?limit=4');
+          const gallery = await galleryResponse.json();
+
+          const featuredGallery = document.getElementById('featured-gallery');
+          if (gallery.length > 0) {
+            featuredGallery.innerHTML = `
+              <div class="gallery-preview">
+                ${gallery.slice(0, 4).map(item => `
+                  <img src="${item.gambar || 'images/placeholder.jpg'}" alt="${item.judul || 'Foto'}" style="width: 70px; height: 70px; object-fit: cover; margin: 2px; border-radius: 4px;" onerror="this.src='images/placeholder.jpg'">
+                `).join('')}
+              </div>
+            `;
+          } else {
+            featuredGallery.innerHTML = '<p>Belum ada foto di galeri.</p>';
+          }
+        } catch (error) {
+          console.error('Error loading featured content:', error);
+          document.getElementById('featured-news').innerHTML = '<p>Error memuat berita.</p>';
+          document.getElementById('featured-gallery').innerHTML = '<p>Error memuat galeri.</p>';
+        }
+      }
+
+      // Load featured content when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        loadFeaturedContent();
+        initializeSearch();
+      });
+
+      // Search functionality
+      function initializeSearch() {
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+
+        // Search on button click
+        searchBtn.addEventListener('click', performSearch);
+
+        // Search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            performSearch();
+          }
+        });
+      }
+
+      function performSearch() {
+        const query = document.getElementById('search-input').value.trim();
+
+        if (query.length < 2) {
+          alert('Masukkan minimal 2 karakter untuk pencarian');
+          return;
+        }
+
+        // Redirect to search results page with query
+        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+      }
+    </script>
+  </body>
+</html>
+            "<p>Error memuat berita.</p>";
+          document.getElementById("featured-gallery").innerHTML =
+            "<p>Error memuat galeri.</p>";
+        }
+      }
+
+      // Load featured content when page loads
+      document.addEventListener("DOMContentLoaded", loadFeaturedContent);
+    </script>
+  </body>
+</html>

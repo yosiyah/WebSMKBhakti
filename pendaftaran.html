@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pendaftaran Siswa Baru - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html">Intrakurikuler</a></li>
+                <li>
+                  <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                    >Ekstrakurikuler</a
+                  >
+                </li>
+                <li>
+                  <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                </li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="pendaftaran.html" class="active">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="registration-section">
+          <h2>Pendaftaran Siswa Baru</h2>
+          <p>
+            Bergabunglah dengan SMK BHAKTI PACET untuk masa depan yang lebih
+            cerah. Isi formulir pendaftaran di bawah ini dengan lengkap dan
+            benar.
+          </p>
+
+          <!-- Progress Steps -->
+          <div class="progress-steps">
+            <div class="step active" data-step="1">
+              <span class="step-number">1</span>
+              <span class="step-title">Data Pribadi</span>
+            </div>
+            <div class="step" data-step="2">
+              <span class="step-number">2</span>
+              <span class="step-title">Data Orang Tua</span>
+            </div>
+            <div class="step" data-step="3">
+              <span class="step-number">3</span>
+              <span class="step-title">Data Akademik</span>
+            </div>
+            <div class="step" data-step="4">
+              <span class="step-number">4</span>
+              <span class="step-title">Konfirmasi</span>
+            </div>
+          </div>
+
+          <!-- Registration Form -->
+          <div class="registration-form">
+            <!-- Step 1: Personal Data -->
+            <div class="form-step active" id="step1">
+              <h3>Data Pribadi Calon Siswa</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="nama_lengkap">Nama Lengkap *</label>
+                  <input type="text" id="nama_lengkap" required />
+                </div>
+                <div class="form-group">
+                  <label for="nama_panggilan">Nama Panggilan</label>
+                  <input type="text" id="nama_panggilan" />
+                </div>
+                <div class="form-group">
+                  <label for="tempat_lahir">Tempat Lahir *</label>
+                  <input type="text" id="tempat_lahir" required />
+                </div>
+                <div class="form-group">
+                  <label for="tanggal_lahir">Tanggal Lahir *</label>
+                  <input type="date" id="tanggal_lahir" required />
+                </div>
+                <div class="form-group">
+                  <label for="jenis_kelamin">Jenis Kelamin *</label>
+                  <select id="jenis_kelamin" required>
+                    <option value="">Pilih jenis kelamin</option>
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="agama">Agama *</label>
+                  <select id="agama" required>
+                    <option value="">Pilih agama</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen">Kristen</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="alamat">Alamat Lengkap *</label>
+                  <textarea id="alamat" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="no_telepon">Nomor Telepon</label>
+                  <input type="tel" id="no_telepon" />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Parent Data -->
+            <div class="form-step" id="step2">
+              <h3>Data Orang Tua / Wali</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="nama_ayah">Nama Ayah *</label>
+                  <input type="text" id="nama_ayah" required />
+                </div>
+                <div class="form-group">
+                  <label for="nama_ibu">Nama Ibu *</label>
+                  <input type="text" id="nama_ibu" required />
+                </div>
+                <div class="form-group">
+                  <label for="pekerjaan_ayah">Pekerjaan Ayah</label>
+                  <input type="text" id="pekerjaan_ayah" />
+                </div>
+                <div class="form-group">
+                  <label for="pekerjaan_ibu">Pekerjaan Ibu</label>
+                  <input type="text" id="pekerjaan_ibu" />
+                </div>
+                <div class="form-group">
+                  <label for="alamat_orangtua">Alamat Orang Tua *</label>
+                  <textarea id="alamat_orangtua" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="no_telepon_ortu">Nomor Telepon Orang Tua *</label>
+                  <input type="tel" id="no_telepon_ortu" required />
+                </div>
+                <div class="form-group">
+                  <label for="penghasilan"
+                    >Penghasilan Orang Tua per Bulan</label
+                  >
+                  <select id="penghasilan">
+                    <option value="">Pilih range penghasilan</option>
+                    <option value="<1jt">< Rp 1.000.000</option>
+                    <option value="1-3jt">Rp 1.000.000 - Rp 3.000.000</option>
+                    <option value="3-5jt">Rp 3.000.000 - Rp 5.000.000</option>
+                    <option value="5-10jt">Rp 5.000.000 - Rp 10.000.000</option>
+                    <option value=">10jt">> Rp 10.000.000</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Academic Data -->
+            <div class="form-step" id="step3">
+              <h3>Data Akademik</h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="sekolah_asal">Sekolah Asal *</label>
+                  <input type="text" id="sekolah_asal" required />
+                </div>
+                <div class="form-group">
+                  <label for="alamat_sekolah">Alamat Sekolah Asal</label>
+                  <textarea id="alamat_sekolah" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="nisn">NISN</label>
+                  <input type="text" id="nisn" maxlength="10" />
+                </div>
+                <div class="form-group">
+                  <label for="tahun_lulus">Tahun Lulus *</label>
+                  <input
+                    type="number"
+                    id="tahun_lulus"
+                    min="2020"
+                    max="2025"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="nilai_rata_rata">Nilai Rata-rata Raport</label>
+                  <input
+                    type="number"
+                    id="nilai_rata_rata"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="jurusan_pilihan">Jurusan Pilihan *</label>
+                  <select id="jurusan_pilihan" required>
+                    <option value="">Pilih jurusan</option>
+                    <option value="TKJ">Teknik Komputer dan Jaringan</option>
+                    <option value="Multimedia">Multimedia</option>
+                    <option value="Akuntansi">Akuntansi</option>
+                    <option value="Administrasi">
+                      Administrasi Perkantoran
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="prestasi">Prestasi Akademik/Non Akademik</label>
+                  <textarea
+                    id="prestasi"
+                    rows="3"
+                    placeholder="Jika ada, sebutkan prestasi yang pernah diraih"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div class="form-step" id="step4">
+              <h3>Konfirmasi Pendaftaran</h3>
+              <div class="confirmation-section">
+                <div class="confirmation-notice">
+                  <h4>📋 Perhatian!</h4>
+                  <ul>
+                    <li>
+                      Pastikan semua data yang diisi sudah benar dan lengkap
+                    </li>
+                    <li>Berkas yang perlu dibawa saat verifikasi:</li>
+                    <ul>
+                      <li>Foto copy rapor semester 1-5</li>
+                      <li>Foto copy SKHUN (jika ada)</li>
+                      <li>Foto copy KK dan KTP orang tua</li>
+                      <li>Pas foto 3x4 (2 lembar)</li>
+                      <li>Foto copy akta kelahiran</li>
+                    </ul>
+                    <li>Biaya pendaftaran: Rp 50.000,-</li>
+                    <li>Pendaftaran dapat dibatalkan jika data tidak sesuai</li>
+                  </ul>
+                </div>
+
+                <div class="terms-section">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="agree_terms" required />
+                    <span
+                      >Saya telah membaca dan menyetujui semua syarat dan
+                      ketentuan pendaftaran</span
+                    >
+                  </label>
+                </div>
+
+                <div class="summary-section">
+                  <h4>Ringkasan Data Pendaftaran</h4>
+                  <div id="data-summary">
+                    <!-- Data summary will be populated by JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="form-navigation">
+            <button
+              type="button"
+              id="prevBtn"
+              class="nav-btn secondary"
+              style="display: none"
+            >
+              Sebelumnya
+            </button>
+            <button type="button" id="nextBtn" class="nav-btn primary">
+              Selanjutnya
+            </button>
+            <button
+              type="submit"
+              id="submitBtn"
+              class="nav-btn success"
+              style="display: none"
+            >
+              Daftar Sekarang
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2024 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Registration form handling
+      let currentStep = 1;
+      const totalSteps = 4;
+      let formData = {};
+
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeForm();
+      });
+
+      function initializeForm() {
+        // Navigation buttons
+        document.getElementById("nextBtn").addEventListener("click", nextStep);
+        document.getElementById("prevBtn").addEventListener("click", prevStep);
+        document
+          .getElementById("submitBtn")
+          .addEventListener("click", submitRegistration);
+
+        // Update progress steps
+        updateProgressSteps();
+      }
+
+      function nextStep() {
+        if (validateCurrentStep()) {
+          saveCurrentStepData();
+          if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+          }
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      }
+
+      function showStep(step) {
+        // Hide all steps
+        document.querySelectorAll(".form-step").forEach((stepDiv) => {
+          stepDiv.classList.remove("active");
+        });
+
+        // Show current step
+        document.getElementById("step" + step).classList.add("active");
+
+        // Update navigation buttons
+        document.getElementById("prevBtn").style.display =
+          step === 1 ? "none" : "inline-block";
+        document.getElementById("nextBtn").style.display =
+          step === totalSteps ? "none" : "inline-block";
+        document.getElementById("submitBtn").style.display =
+          step === totalSteps ? "inline-block" : "none";
+
+        // Update progress steps
+        updateProgressSteps();
+
+        // Special handling for step 4
+        if (step === 4) {
+          populateSummary();
+        }
+      }
+
+      function updateProgressSteps() {
+        document.querySelectorAll(".step").forEach((stepDiv, index) => {
+          const stepNumber = index + 1;
+          if (stepNumber < currentStep) {
+            stepDiv.classList.add("completed");
+            stepDiv.classList.remove("active");
+          } else if (stepNumber === currentStep) {
+            stepDiv.classList.add("active");
+            stepDiv.classList.remove("completed");
+          } else {
+            stepDiv.classList.remove("active", "completed");
+          }
+        });
+      }
+
+      function validateCurrentStep() {
+        const stepDiv = document.getElementById("step" + currentStep);
+        const requiredFields = stepDiv.querySelectorAll("[required]");
+        let isValid = true;
+
+        requiredFields.forEach((field) => {
+          if (!field.value.trim()) {
+            field.classList.add("error");
+            isValid = false;
+          } else {
+            field.classList.remove("error");
+          }
+        });
+
+        // Additional validation for step 1
+        if (currentStep === 1) {
+          const email = document.getElementById("email");
+          if (email.value && !isValidEmail(email.value)) {
+            email.classList.add("error");
+            isValid = false;
+          }
+        }
+
+        if (!isValid) {
+          showMessage("Mohon lengkapi semua field yang wajib diisi", "error");
+        }
+
+        return isValid;
+      }
+
+      function saveCurrentStepData() {
+        const stepDiv = document.getElementById("step" + currentStep);
+        const inputs = stepDiv.querySelectorAll("input, select, textarea");
+
+        inputs.forEach((input) => {
+          if (input.value) {
+            formData[input.id] = input.value;
+          }
+        });
+      }
+
+      function populateSummary() {
+        const summaryDiv = document.getElementById("data-summary");
+        let summary = "";
+
+        // Personal data
+        summary += "📋 DATA PRIBADI\n";
+        summary += `Nama Lengkap: ${formData.nama_lengkap || ""}\n`;
+        summary += `Tempat, Tanggal Lahir: ${formData.tempat_lahir || ""}, ${
+          formatDate(formData.tanggal_lahir) || ""
+        }\n`;
+        summary += `Jenis Kelamin: ${
+          formData.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan"
+        }\n`;
+        summary += `Agama: ${formData.agama || ""}\n`;
+        summary += `Alamat: ${formData.alamat || ""}\n`;
+        if (formData.email) summary += `Email: ${formData.email}\n`;
+        if (formData.no_telepon) summary += `Telepon: ${formData.no_telepon}\n`;
+
+        summary += "\n👨‍👩‍👧‍👦 DATA ORANG TUA\n";
+        summary += `Nama Ayah: ${formData.nama_ayah || ""}\n`;
+        summary += `Nama Ibu: ${formData.nama_ibu || ""}\n`;
+        summary += `Alamat: ${formData.alamat_orangtua || ""}\n`;
+        summary += `Telepon: ${formData.no_telepon_ortu || ""}\n`;
+
+        summary += "\n🎓 DATA AKADEMIK\n";
+        summary += `Sekolah Asal: ${formData.sekolah_asal || ""}\n`;
+        summary += `Tahun Lulus: ${formData.tahun_lulus || ""}\n`;
+        summary += `Jurusan Pilihan: ${
+          getJurusanName(formData.jurusan_pilihan) || ""
+        }\n`;
+        if (formData.nilai_rata_rata)
+          summary += `Nilai Rata-rata: ${formData.nilai_rata_rata}\n`;
+
+        summaryDiv.textContent = summary;
+      }
+
+      async function submitRegistration(event) {
+        event.preventDefault();
+
+        // Check terms agreement
+        const agreeTerms = document.getElementById("agree_terms");
+        if (!agreeTerms.checked) {
+          showMessage("Anda harus menyetujui syarat dan ketentuan", "error");
+          return;
+        }
+
+        // Show loading
+        const submitBtn = document.getElementById("submitBtn");
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Mengirim...";
+        submitBtn.disabled = true;
+
+        try {
+          const response = await fetch("api/pendaftaran.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showMessage(
+              `Pendaftaran berhasil! Nomor pendaftaran: ${result.no_pendaftaran}`,
+              "success"
+            );
+
+            // Reset form after 3 seconds
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          } else {
+            showMessage(result.error || "Pendaftaran gagal", "error");
+          }
+        } catch (error) {
+          console.error("Registration error:", error);
+          showMessage("Terjadi kesalahan saat mengirim pendaftaran", "error");
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      }
+
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        return date.toLocaleDateString("id-ID", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+      }
+
+      function getJurusanName(code) {
+        const jurusanMap = {
+          TKJ: "Teknik Komputer dan Jaringan",
+          Multimedia: "Multimedia",
+          Akuntansi: "Akuntansi",
+          Administrasi: "Administrasi Perkantoran",
+        };
+        return jurusanMap[code] || code;
+      }
+
+      function showMessage(message, type) {
+        // Remove existing message
+        const existingMessage = document.querySelector(".message");
+        if (existingMessage) {
+          existingMessage.remove();
+        }
+
+        // Create message element
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${type}`;
+        messageDiv.textContent = message;
+
+        // Add to form
+        const registrationForm = document.querySelector(".registration-form");
+        registrationForm.insertBefore(messageDiv, registrationForm.firstChild);
+
+        // Auto remove after 5 seconds for errors
+        if (type === "error") {
+          setTimeout(() => {
+            if (messageDiv.parentNode) {
+              messageDiv.remove();
+            }
+          }, 5000);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kegiatan - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html" class="active">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html">Intrakurikuler</a></li>
+                <li>
+                  <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                    >Ekstrakurikuler</a
+                  >
+                </li>
+                <li>
+                  <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                </li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html">Forum</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="pendaftaran.html">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="news-section">
+          <h2>Kegiatan</h2>
+          <p>
+            Tetap update dengan kegiatan terbaru dan pengumuman penting dari SMK
+            BHAKTI PACET.
+          </p>
+
+          <div class="news-filters">
+            <button class="filter-btn active" data-category="all">Semua</button>
+            <button class="filter-btn" data-category="academic">
+              Akademik
+            </button>
+            <button class="filter-btn" data-category="administrative">
+              Administratif
+            </button>
+            <button class="filter-btn" data-category="student">Siswa</button>
+          </div>
+
+          <div class="news-grid" id="news-grid">
+            <!-- News items will be loaded dynamically -->
+            <div class="loading-state">
+              <p>Memuat kegiatan...</p>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination" id="pagination" style="display: none;">
+            <button class="page-btn" id="prev-page" disabled>&laquo; Sebelumnya</button>
+            <div class="page-numbers" id="page-numbers"></div>
+            <button class="page-btn" id="next-page" disabled>Selanjutnya &raquo;</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- News Detail Modal -->
+    <div id="news-modal" class="modal">
+      <div class="modal-content large-modal">
+        <div class="modal-header">
+          <h3 id="news-modal-title">Detail Kegiatan</h3>
+          <span class="modal-close">&times;</span>
+        </div>
+        <div id="news-modal-content" class="modal-body">
+          <div class="news-detail">
+            <div class="news-meta">
+              <span class="news-date" id="news-modal-date"></span>
+              <span class="news-category" id="news-modal-category"></span>
+            </div>
+            <div class="news-image-container" id="news-image-container" style="display: none;">
+              <img id="news-modal-image" src="" alt="" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+            </div>
+            <div class="news-body" id="news-modal-body"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2023 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" title="Kembali ke Atas">
+      ↑
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+      // Pagination variables
+      let currentPage = 1;
+      const itemsPerPage = 9; // 3x3 grid
+      let totalItems = 0;
+      let totalPages = 0;
+
+      // Load kegiatan with pagination
+      async function loadKegiatan(page = 1) {
+        try {
+          const offset = (page - 1) * itemsPerPage;
+          const response = await fetch(`api/kegiatan.php?limit=${itemsPerPage}&offset=${offset}`);
+          const kegiatan = await response.json();
+
+          // Get total count for pagination
+          const totalResponse = await fetch('api/kegiatan.php?limit=1000'); // Get all to count
+          const allKegiatan = await totalResponse.json();
+          totalItems = allKegiatan.length;
+          totalPages = Math.ceil(totalItems / itemsPerPage);
+
+          const newsGrid = document.getElementById("news-grid");
+          newsGrid.innerHTML = "";
+
+          if (kegiatan.length === 0) {
+            newsGrid.innerHTML =
+              '<div class="empty-state"><h3>Tidak ada kegiatan</h3><p>Belum ada kegiatan yang dipublikasikan.</p></div>';
+            hidePagination();
+            return;
+          }
+
+          kegiatan.forEach((item) => {
+            const article = document.createElement("article");
+            article.className = "news-item";
+
+            const imageUrl = item.gambar || "images/placeholder.jpg";
+
+            article.innerHTML = `
+              <img src="${imageUrl}" alt="${item.judul}" width="300" height="200" onerror="this.src='images/placeholder.jpg'">
+              <div class="news-content">
+                <h3>${item.judul}</h3>
+                <p class="news-date">${item.tanggal_formatted}</p>
+                <p>${item.excerpt}</p>
+                <a href="#" class="read-more" onclick="showKegiatanDetail(${item.id})">Baca Selengkapnya</a>
+              </div>
+            `;
+
+            newsGrid.appendChild(article);
+          });
+
+          // Show pagination if needed
+          if (totalPages > 1) {
+            showPagination();
+            updatePaginationControls();
+          } else {
+            hidePagination();
+          }
+
+        } catch (error) {
+          console.error("Error loading kegiatan:", error);
+          document.getElementById("news-grid").innerHTML =
+            "<p>Error memuat kegiatan</p>";
+          hidePagination();
+        }
+      }
+
+      function showPagination() {
+        document.getElementById('pagination').style.display = 'flex';
+      }
+
+      function hidePagination() {
+        document.getElementById('pagination').style.display = 'none';
+      }
+
+      function updatePaginationControls() {
+        const prevBtn = document.getElementById('prev-page');
+        const nextBtn = document.getElementById('next-page');
+        const pageNumbers = document.getElementById('page-numbers');
+
+        // Update prev/next buttons
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === totalPages;
+
+        // Generate page numbers
+        pageNumbers.innerHTML = '';
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        // Adjust start page if we're near the end
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // Add first page and ellipsis if needed
+        if (startPage > 1) {
+          addPageButton(1);
+          if (startPage > 2) {
+            pageNumbers.innerHTML += '<span class="page-ellipsis">...</span>';
+          }
+        }
+
+        // Add page numbers
+        for (let i = startPage; i <= endPage; i++) {
+          addPageButton(i);
+        }
+
+        // Add last page and ellipsis if needed
+        if (endPage < totalPages) {
+          if (endPage < totalPages - 1) {
+            pageNumbers.innerHTML += '<span class="page-ellipsis">...</span>';
+          }
+          addPageButton(totalPages);
+        }
+      }
+
+      function addPageButton(pageNum) {
+        const pageNumbers = document.getElementById('page-numbers');
+        const pageBtn = document.createElement('button');
+        pageBtn.className = `page-btn ${pageNum === currentPage ? 'active' : ''}`;
+        pageBtn.textContent = pageNum;
+        pageBtn.addEventListener('click', () => goToPage(pageNum));
+        pageNumbers.appendChild(pageBtn);
+      }
+
+      function goToPage(page) {
+        if (page >= 1 && page <= totalPages) {
+          currentPage = page;
+          loadKegiatan(currentPage);
+          // Scroll to top of content
+          document.querySelector('.news-section').scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Pagination event listeners
+      document.getElementById('prev-page').addEventListener('click', () => {
+        if (currentPage > 1) {
+          goToPage(currentPage - 1);
+        }
+      });
+
+      document.getElementById('next-page').addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          goToPage(currentPage + 1);
+        }
+      });
+
+      async function showKegiatanDetail(id) {
+        try {
+          // Load news details
+          const response = await fetch(`api/kegiatan.php?id=${id}`);
+          const kegiatan = await response.json();
+
+          if (kegiatan.error) {
+            alert("Error: " + kegiatan.error);
+            return;
+          }
+
+          // Populate modal with news data
+          document.getElementById('news-modal-title').textContent = kegiatan.judul;
+          document.getElementById('news-modal-date').textContent = kegiatan.tanggal_formatted;
+          document.getElementById('news-modal-category').textContent = `Kategori: ${kegiatan.kategori}`;
+
+          // Handle image display
+          const imageContainer = document.getElementById('news-image-container');
+          const newsImage = document.getElementById('news-modal-image');
+
+          if (kegiatan.gambar) {
+            newsImage.src = kegiatan.gambar;
+            newsImage.alt = kegiatan.judul;
+            imageContainer.style.display = 'block';
+          } else {
+            imageContainer.style.display = 'none';
+          }
+
+          // Set news content
+          document.getElementById('news-modal-body').innerHTML = kegiatan.isi.replace(/\n/g, '<br>');
+
+          // Show modal
+          document.getElementById('news-modal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+
+        } catch (error) {
+          console.error('Error loading news details:', error);
+          alert('Error memuat detail kegiatan');
+        }
+      }
+
+      function closeNewsModal() {
+        document.getElementById('news-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+
+      // Load kegiatan when page loads
+      document.addEventListener("DOMContentLoaded", function() {
+        loadKegiatan();
+
+        // Modal event listeners
+        const modal = document.getElementById('news-modal');
+        const modalClose = document.querySelector('#news-modal .modal-close');
+
+        if (modalClose) {
+          modalClose.addEventListener('click', closeNewsModal);
+        }
+
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+              closeNewsModal();
+            }
+          });
+        }
+      });
+
+      // Close modal with ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeNewsModal();
+        }
+      });
+    </script>
+  </body>
+</html>

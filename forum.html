@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forum Komunikasi - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="berita.html">Kegiatan</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle">Kurikulum</a>
+              <ul class="dropdown-menu">
+                <li><a href="kelas.html">Intrakurikuler</a></li>
+                <li>
+                  <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                    >Ekstrakurikuler</a
+                  >
+                </li>
+                <li>
+                  <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                </li>
+                <li><a href="kalender.html">Kalender Akademik</a></li>
+              </ul>
+            </li>
+            <li><a href="forum.html" class="active">Forum</a></li>
+            <li><a href="galeri.html">Galeri</a></li>
+            <li><a href="pendaftaran.html">Pendaftaran</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+            <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="forum-section">
+          <h2>Forum Komunikasi</h2>
+          <p>
+            Tempat untuk siswa dan guru berdiskusi, bertanya, dan berbagi
+            pengetahuan.
+          </p>
+
+          <div class="forum-categories">
+            <div class="category-card">
+              <h3>Pertanyaan Akademik</h3>
+              <p>Diskusi tentang mata pelajaran dan tugas sekolah.</p>
+              <a href="#" class="category-link">Lihat Topik</a>
+            </div>
+            <div class="category-card">
+              <h3>Kegiatan Ekstrakurikuler</h3>
+              <p>Informasi dan diskusi tentang klub dan kegiatan siswa.</p>
+              <a href="#" class="category-link">Lihat Topik</a>
+            </div>
+            <div class="category-card">
+              <h3>Teknologi dan Inovasi</h3>
+              <p>Berbagi pengetahuan tentang teknologi terbaru.</p>
+              <a href="#" class="category-link">Lihat Topik</a>
+            </div>
+          </div>
+
+          <div class="recent-posts">
+            <h3>Postingan Terbaru</h3>
+            <div id="posts-list">
+              <div class="loading-state">
+                <p>Memuat postingan...</p>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="forum-pagination" style="display: none;">
+              <button class="page-btn" id="forum-prev-page" disabled>&laquo; Sebelumnya</button>
+              <div class="page-numbers" id="forum-page-numbers"></div>
+              <button class="page-btn" id="forum-next-page" disabled>Selanjutnya &raquo;</button>
+            </div>
+          </div>
+
+          <div class="new-post-form">
+            <h3>Buat Postingan Baru</h3>
+            <form id="new-post-form">
+              <div class="form-group">
+                <label for="post-title">Judul *</label>
+                <input type="text" id="post-title" required />
+              </div>
+              <div class="form-group">
+                <label for="post-content">Isi *</label>
+                <textarea id="post-content" rows="5" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="post-author">Nama *</label>
+                <input type="text" id="post-author" required />
+              </div>
+              <div class="form-group">
+                <label for="post-email">Email *</label>
+                <input type="email" id="post-email" required />
+              </div>
+              <div class="form-group">
+                <label for="post-category">Kategori</label>
+                <select id="post-category">
+                  <option value="akademik">Pertanyaan Akademik</option>
+                  <option value="ekstrakurikuler">
+                    Kegiatan Ekstrakurikuler
+                  </option>
+                  <option value="teknologi">Teknologi dan Inovasi</option>
+                  <option value="umum">Umum</option>
+                </select>
+              </div>
+              <button type="submit" class="submit-btn">Kirim Postingan</button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Post Detail Modal -->
+    <div id="post-modal" class="modal">
+      <div class="modal-content large-modal">
+        <div class="modal-header">
+          <h3 id="modal-post-title">Detail Postingan</h3>
+          <span class="modal-close">&times;</span>
+        </div>
+        <div id="modal-post-content" class="modal-body">
+          <div class="post-detail">
+            <div class="post-meta">
+              <span class="post-author" id="modal-post-author"></span>
+              <span class="post-date" id="modal-post-date"></span>
+              <span class="post-category" id="modal-post-category"></span>
+            </div>
+            <div class="post-body" id="modal-post-body"></div>
+          </div>
+
+          <div class="comments-section">
+            <h4>Komentar (<span id="comments-count">0</span>)</h4>
+            <div id="comments-list">
+              <div class="loading-state">
+                <p>Memuat komentar...</p>
+              </div>
+            </div>
+
+            <div class="new-comment-form">
+              <h5>Tambah Komentar</h5>
+              <form id="comment-form">
+                <div class="form-group">
+                  <label for="comment-author">Nama *</label>
+                  <input type="text" id="comment-author" required />
+                </div>
+                <div class="form-group">
+                  <label for="comment-email">Email *</label>
+                  <input type="email" id="comment-email" required />
+                </div>
+                <div class="form-group">
+                  <label for="comment-content">Komentar *</label>
+                  <textarea id="comment-content" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Kirim Komentar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2023 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Forum pagination variables
+      let forumCurrentPage = 1;
+      const forumItemsPerPage = 10;
+      let forumTotalItems = 0;
+      let forumTotalPages = 0;
+
+      // Load forum posts with pagination
+      async function loadForumPosts(page = 1) {
+        try {
+          const offset = (page - 1) * forumItemsPerPage;
+          const response = await fetch(`api/forum.php?limit=${forumItemsPerPage}&offset=${offset}`);
+          const posts = await response.json();
+
+          // Get total count for pagination
+          const totalResponse = await fetch('api/forum.php?limit=1000');
+          const allPosts = await totalResponse.json();
+          forumTotalItems = allPosts.length;
+          forumTotalPages = Math.ceil(forumTotalItems / forumItemsPerPage);
+
+          const postsList = document.getElementById("posts-list");
+          postsList.innerHTML = "";
+
+          if (posts.length === 0) {
+            postsList.innerHTML =
+              '<div class="empty-state"><h4>Tidak ada postingan</h4><p>Belum ada postingan di forum.</p></div>';
+            hideForumPagination();
+            return;
+          }
+
+          posts.forEach((post) => {
+            const postItem = document.createElement("div");
+            postItem.className = "post-item";
+
+            postItem.innerHTML = `
+              <div class="post-header">
+                <span class="post-author">${post.penulis}</span>
+                <span class="post-date">${post.created_at_formatted}</span>
+              </div>
+              <h4>${post.judul}</h4>
+              <p>${post.excerpt}</p>
+              <div class="post-actions">
+                <a href="#" class="reply-btn" onclick="showPostDetail(${post.id})">Lihat Detail</a>
+                <span class="replies-count">${post.comments_count} balasan</span>
+              </div>
+            `;
+
+            postsList.appendChild(postItem);
+          });
+
+          // Show pagination if needed
+          if (forumTotalPages > 1) {
+            showForumPagination();
+            updateForumPaginationControls();
+          } else {
+            hideForumPagination();
+          }
+
+        } catch (error) {
+          console.error("Error loading posts:", error);
+          document.getElementById("posts-list").innerHTML =
+            "<p>Error memuat postingan</p>";
+          hideForumPagination();
+        }
+      }
+
+      function showForumPagination() {
+        document.getElementById('forum-pagination').style.display = 'flex';
+      }
+
+      function hideForumPagination() {
+        document.getElementById('forum-pagination').style.display = 'none';
+      }
+
+      function updateForumPaginationControls() {
+        const prevBtn = document.getElementById('forum-prev-page');
+        const nextBtn = document.getElementById('forum-next-page');
+        const pageNumbers = document.getElementById('forum-page-numbers');
+
+        // Update prev/next buttons
+        prevBtn.disabled = forumCurrentPage === 1;
+        nextBtn.disabled = forumCurrentPage === forumTotalPages;
+
+        // Generate page numbers
+        pageNumbers.innerHTML = '';
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, forumCurrentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(forumTotalPages, startPage + maxVisiblePages - 1);
+
+        // Adjust start page if we're near the end
+        if (endPage - startPage + 1 < maxVisiblePages) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // Add first page and ellipsis if needed
+        if (startPage > 1) {
+          addForumPageButton(1);
+          if (startPage > 2) {
+            pageNumbers.innerHTML += '<span class="page-ellipsis">...</span>';
+          }
+        }
+
+        // Add page numbers
+        for (let i = startPage; i <= endPage; i++) {
+          addForumPageButton(i);
+        }
+
+        // Add last page and ellipsis if needed
+        if (endPage < forumTotalPages) {
+          if (endPage < forumTotalPages - 1) {
+            pageNumbers.innerHTML += '<span class="page-ellipsis">...</span>';
+          }
+          addForumPageButton(forumTotalPages);
+        }
+      }
+
+      function addForumPageButton(pageNum) {
+        const pageNumbers = document.getElementById('forum-page-numbers');
+        const pageBtn = document.createElement('button');
+        pageBtn.className = `page-btn ${pageNum === forumCurrentPage ? 'active' : ''}`;
+        pageBtn.textContent = pageNum;
+        pageBtn.addEventListener('click', () => goToForumPage(pageNum));
+        pageNumbers.appendChild(pageBtn);
+      }
+
+      function goToForumPage(page) {
+        if (page >= 1 && page <= forumTotalPages) {
+          forumCurrentPage = page;
+          loadForumPosts(forumCurrentPage);
+          // Scroll to top of forum section
+          document.querySelector('.recent-posts').scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      // Forum pagination event listeners
+      document.addEventListener('DOMContentLoaded', function() {
+        // Existing initialization code...
+
+        // Add pagination event listeners
+        document.getElementById('forum-prev-page').addEventListener('click', () => {
+          if (forumCurrentPage > 1) {
+            goToForumPage(forumCurrentPage - 1);
+          }
+        });
+
+        document.getElementById('forum-next-page').addEventListener('click', () => {
+          if (forumCurrentPage < forumTotalPages) {
+            goToForumPage(forumCurrentPage + 1);
+          }
+        });
+      });
+
+      // Handle new post submission
+      async function submitNewPost(event) {
+        event.preventDefault();
+
+        const formData = {
+          judul: document.getElementById("post-title").value,
+          isi: document.getElementById("post-content").value,
+          penulis: document.getElementById("post-author").value,
+          email: document.getElementById("post-email").value,
+          kategori: document.getElementById("post-category").value,
+        };
+
+        try {
+          const response = await fetch("api/forum.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alert("Postingan berhasil dikirim dan menunggu moderasi!");
+            document.getElementById("new-post-form").reset();
+            loadForumPosts(); // Reload posts
+          } else {
+            alert("Error: " + result.error);
+          }
+        } catch (error) {
+          console.error("Error submitting post:", error);
+          alert("Error mengirim postingan");
+        }
+      }
+
+      // Global variable to store current post ID
+      let currentPostId = null;
+
+      async function showPostDetail(postId) {
+        currentPostId = postId;
+        try {
+          // Load post details
+          const response = await fetch(`api/forum.php?id=${postId}`);
+          const post = await response.json();
+
+          if (post.error) {
+            alert("Error: " + post.error);
+            return;
+          }
+
+          // Populate modal with post data
+          document.getElementById('modal-post-title').textContent = post.judul;
+          document.getElementById('modal-post-author').textContent = `Oleh: ${post.penulis}`;
+          document.getElementById('modal-post-date').textContent = post.created_at_formatted;
+          document.getElementById('modal-post-category').textContent = `Kategori: ${post.kategori}`;
+          document.getElementById('modal-post-body').innerHTML = post.isi.replace(/\n/g, '<br>');
+
+          // Show modal
+          document.getElementById('post-modal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+
+          // Load comments
+          await loadComments(postId);
+
+        } catch (error) {
+          console.error('Error loading post details:', error);
+          alert('Error memuat detail postingan');
+        }
+      }
+
+      async function loadComments(postId) {
+        try {
+          const response = await fetch(`api/forum.php?id=${postId}`);
+          const post = await response.json();
+
+          const commentsList = document.getElementById('comments-list');
+          const commentsCount = document.getElementById('comments-count');
+
+          if (post.comments && post.comments.length > 0) {
+            commentsCount.textContent = post.comments.length;
+            commentsList.innerHTML = post.comments.map(comment => `
+              <div class="comment-item">
+                <div class="comment-header">
+                  <span class="comment-author">${comment.penulis}</span>
+                  <span class="comment-date">${comment.created_at_formatted}</span>
+                </div>
+                <div class="comment-body">${comment.isi.replace(/\n/g, '<br>')}</div>
+              </div>
+            `).join('');
+          } else {
+            commentsCount.textContent = '0';
+            commentsList.innerHTML = '<div class="empty-state"><p>Belum ada komentar.</p></div>';
+          }
+        } catch (error) {
+          console.error('Error loading comments:', error);
+          document.getElementById('comments-list').innerHTML = '<p>Error memuat komentar</p>';
+        }
+      }
+
+      async function submitComment(event) {
+        event.preventDefault();
+
+        const formData = {
+          post_id: currentPostId,
+          isi: document.getElementById('comment-content').value,
+          penulis: document.getElementById('comment-author').value,
+          email: document.getElementById('comment-email').value
+        };
+
+        try {
+          const response = await fetch('api/forum.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...formData,
+              type: 'comment' // Special flag for comments
+            })
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            alert('Komentar berhasil dikirim dan menunggu moderasi!');
+            document.getElementById('comment-form').reset();
+            // Reload comments
+            await loadComments(currentPostId);
+          } else {
+            alert('Error: ' + result.error);
+          }
+        } catch (error) {
+          console.error('Error submitting comment:', error);
+          alert('Error mengirim komentar');
+        }
+      }
+
+      function closeModal() {
+        document.getElementById('post-modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        currentPostId = null;
+      }
+
+      // Initialize when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadForumPosts();
+
+        // Handle form submission
+        const form = document.getElementById("new-post-form");
+        if (form) {
+          form.addEventListener("submit", submitNewPost);
+        }
+
+        // Modal event listeners
+        const modal = document.getElementById('post-modal');
+        const modalClose = document.querySelector('.modal-close');
+
+        if (modalClose) {
+          modalClose.addEventListener('click', closeModal);
+        }
+
+        if (modal) {
+          modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+              closeModal();
+            }
+          });
+        }
+
+        // Comment form submission
+        const commentForm = document.getElementById('comment-form');
+        if (commentForm) {
+          commentForm.addEventListener('submit', submitComment);
+        }
+      });
+
+      // Close modal with ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+    </script>
+</html>

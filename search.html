@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hasil Pencarian - SMK BHAKTI PACET</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <img
+            src="images/logo/logo-smk-bhakti-pacet.png"
+            alt="Logo SMK BHAKTI PACET"
+            width="50"
+            height="50"
+          />
+          <h1>SMK BHAKTI PACET</h1>
+        </div>
+        <nav>
+          <div class="nav-container">
+            <ul class="nav-menu">
+              <li><a href="index.html">Beranda</a></li>
+              <li><a href="tentang.html">Tentang</a></li>
+              <li><a href="berita.html">Kegiatan</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle">Kurikulum</a>
+                <ul class="dropdown-menu">
+                  <li><a href="kelas.html">Intrakurikuler</a></li>
+                  <li>
+                    <a href="smk-bhakti-pacet/ekstrakurikuler.html"
+                      >Ekstrakurikuler</a
+                    >
+                  </li>
+                  <li>
+                    <a href="smk-bhakti-pacet/kokurikuler.html">Kokurikuler</a>
+                  </li>
+                  <li><a href="kalender.html">Kalender Akademik</a></li>
+                </ul>
+              </li>
+              <li><a href="forum.html">Forum</a></li>
+              <li><a href="galeri.html">Galeri</a></li>
+              <li><a href="pendaftaran.html">Pendaftaran</a></li>
+              <li><a href="kontak.html">Kontak</a></li>
+              <li><a href="login.html" class="login-btn">Login/Daftar</a></li>
+            </ul>
+            <div class="search-bar">
+              <input type="text" id="search-input" placeholder="Cari..." />
+              <button id="search-btn">🔍</button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="search-section">
+          <h2>Hasil Pencarian</h2>
+
+          <div class="search-controls">
+            <div class="search-info">
+              <p id="search-query">
+                Mencari: <strong id="query-text"></strong>
+              </p>
+              <p id="search-results-count">
+                Ditemukan <strong id="results-count">0</strong> hasil
+              </p>
+            </div>
+            <div class="search-filters">
+              <select id="search-type">
+                <option value="all">Semua</option>
+                <option value="kegiatan">Kegiatan</option>
+                <option value="forum">Forum</option>
+                <option value="galeri">Galeri</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="search-results" class="search-results">
+            <div class="loading-state">
+              <p>Mencari...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Info Kontak</h4>
+            <p>Alamat: Jl. Contoh No. 123, Kota</p>
+            <p>Telepon: (021) 123-4567</p>
+            <p>Email: info@smkbhaktipacet.sch.id</p>
+          </div>
+          <div class="footer-section">
+            <h4>Tautan Sosial</h4>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+        <p>&copy; 2024 SMK BHAKTI PACET. Semua hak dilindungi.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Search results page functionality
+      let currentQuery = "";
+      let currentType = "all";
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get search query from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        currentQuery = urlParams.get("q") || "";
+
+        if (currentQuery) {
+          document.getElementById("query-text").textContent = currentQuery;
+          document.getElementById("search-input").value = currentQuery;
+          performSearch();
+        }
+
+        // Initialize search controls
+        initializeSearchControls();
+      });
+
+      function initializeSearchControls() {
+        const searchInput = document.getElementById("search-input");
+        const searchBtn = document.getElementById("search-btn");
+        const searchType = document.getElementById("search-type");
+
+        // Search on button click
+        searchBtn.addEventListener("click", function () {
+          const query = searchInput.value.trim();
+          if (query.length >= 2) {
+            currentQuery = query;
+            performSearch();
+            updateURL();
+          } else {
+            alert("Masukkan minimal 2 karakter untuk pencarian");
+          }
+        });
+
+        // Search on Enter key
+        searchInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const query = searchInput.value.trim();
+            if (query.length >= 2) {
+              currentQuery = query;
+              performSearch();
+              updateURL();
+            } else {
+              alert("Masukkan minimal 2 karakter untuk pencarian");
+            }
+          }
+        });
+
+        // Filter change
+        searchType.addEventListener("change", function () {
+          currentType = this.value;
+          if (currentQuery) {
+            performSearch();
+            updateURL();
+          }
+        });
+      }
+
+      async function performSearch() {
+        if (!currentQuery) return;
+
+        const resultsDiv = document.getElementById("search-results");
+        resultsDiv.innerHTML =
+          '<div class="loading-state"><p>Mencari...</p></div>';
+
+        try {
+          const response = await fetch(
+            `api/search.php?q=${encodeURIComponent(
+              currentQuery
+            )}&type=${currentType}`
+          );
+          const data = await response.json();
+
+          displaySearchResults(data);
+        } catch (error) {
+          console.error("Search error:", error);
+          resultsDiv.innerHTML =
+            '<div class="error-state"><p>Terjadi kesalahan saat mencari</p></div>';
+        }
+      }
+
+      function displaySearchResults(data) {
+        const resultsDiv = document.getElementById("search-results");
+        const resultsCount = document.getElementById("results-count");
+
+        resultsCount.textContent = data.total;
+
+        if (data.total === 0) {
+          resultsDiv.innerHTML = `
+            <div class="empty-state">
+              <h3>Tidak ada hasil</h3>
+              <p>Tidak ditemukan hasil untuk "<strong>${data.query}</strong>"</p>
+              <p>Coba gunakan kata kunci yang berbeda</p>
+            </div>
+          `;
+          return;
+        }
+
+        let resultsHtml = "";
+
+        // Display kegiatan results
+        if (data.results.kegiatan && data.results.kegiatan.length > 0) {
+          resultsHtml += `
+            <div class="search-category">
+              <h3>📰 Kegiatan (${data.results.kegiatan.length})</h3>
+              <div class="category-results">
+          `;
+
+          data.results.kegiatan.forEach((item) => {
+            resultsHtml += `
+              <div class="search-item" onclick="navigateToResult('${
+                item.url
+              }', ${item.id})">
+                <div class="search-item-content">
+                  <h4>${item.title_highlighted}</h4>
+                  <p>${item.excerpt_highlighted}</p>
+                  <small class="search-meta">
+                    ${item.tanggal_formatted} • ${item.kategori}
+                  </small>
+                </div>
+                ${
+                  item.gambar
+                    ? `<img src="${item.gambar}" alt="${item.judul}" class="search-thumbnail">`
+                    : ""
+                }
+              </div>
+            `;
+          });
+
+          resultsHtml += "</div></div>";
+        }
+
+        // Display forum results
+        if (data.results.forum && data.results.forum.length > 0) {
+          resultsHtml += `
+            <div class="search-category">
+              <h3>💬 Forum (${data.results.forum.length})</h3>
+              <div class="category-results">
+          `;
+
+          data.results.forum.forEach((item) => {
+            resultsHtml += `
+              <div class="search-item" onclick="navigateToResult('${item.url}', ${item.id})">
+                <div class="search-item-content">
+                  <h4>${item.title_highlighted}</h4>
+                  <p>${item.excerpt_highlighted}</p>
+                  <small class="search-meta">
+                    ${item.created_at_formatted} • ${item.penulis} • ${item.kategori}
+                  </small>
+                </div>
+              </div>
+            `;
+          });
+
+          resultsHtml += "</div></div>";
+        }
+
+        // Display galeri results
+        if (data.results.galeri && data.results.galeri.length > 0) {
+          resultsHtml += `
+            <div class="search-category">
+              <h3>📸 Galeri (${data.results.galeri.length})</h3>
+              <div class="category-results">
+          `;
+
+          data.results.galeri.forEach((item) => {
+            resultsHtml += `
+              <div class="search-item" onclick="navigateToResult('${
+                item.url
+              }', ${item.id})">
+                <img src="${item.gambar}" alt="${
+              item.judul || "Foto"
+            }" class="search-thumbnail">
+                <div class="search-item-content">
+                  <h4>${item.title_highlighted}</h4>
+                  <p>${item.excerpt_highlighted}</p>
+                  <small class="search-meta">
+                    ${item.tanggal_formatted || "Tanpa tanggal"} • ${
+              item.kategori
+            }
+                  </small>
+                </div>
+              </div>
+            `;
+          });
+
+          resultsHtml += "</div></div>";
+        }
+
+        resultsDiv.innerHTML = resultsHtml;
+      }
+
+      function navigateToResult(url, id) {
+        if (url === "berita.html") {
+          // For news, we need to handle the modal
+          window.location.href = `${url}?id=${id}`;
+        } else if (url === "forum.html") {
+          // For forum, we need to handle the modal
+          window.location.href = `${url}?post=${id}`;
+        } else {
+          window.location.href = url;
+        }
+      }
+
+      function updateURL() {
+        const newURL = `search.html?q=${encodeURIComponent(
+          currentQuery
+        )}&type=${currentType}`;
+        window.history.pushState({}, "", newURL);
+      }
+    </script>
+  </body>
+</html>
